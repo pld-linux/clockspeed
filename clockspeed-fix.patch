@@ -1,0 +1,18 @@
+--- clockspeed-0.62/error.h.orig	1998-10-13 19:37:49.000000000 +0200
++++ clockspeed-0.62/error.h	2008-01-07 00:38:14.155875478 +0100
+@@ -1,7 +1,7 @@
+ #ifndef ERROR_H
+ #define ERROR_H
+ 
+-extern int errno;
++#include <errno.h>
+ 
+ extern int error_intr;
+ extern int error_nomem;
+--- clockspeed-0.62/clockview.c.orig	1998-10-13 19:37:49.000000000 +0200
++++ clockspeed-0.62/clockview.c	2008-01-07 00:38:54.202157585 +0100
+@@ -1,3 +1,4 @@
++#include <time.h>
+ #include <sys/types.h>
+ #include <sys/time.h>
+ #include "substdio.h"
