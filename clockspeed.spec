@@ -10,6 +10,7 @@ License:	unknown?
 Group:		Daemons
 Source0:	http://cr.yp.to/clockspeed/%{name}-%{version}.tar.gz
 # Source0-md5:	425614174fcfe2ad42d22d3d02e2d567
+Patch0:		%{name}-fix.patch
 URL:		http://cr.yp.to/clockspeed.html
 BuildRequires:	rpmbuild(macros) >= 1.268
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -52,20 +53,20 @@ Solaris.
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
-%{__make} \
-	CC="%{__cc}" \
-	LD="%{__cc}" \
-	LDFLAGS="%{rpmldflags}" \
+echo '%{__cc} %{rpmcflags}' > conf-cc
+echo '%{__cc} %{rpmldflags}' > conf-ld
+echo "$RPM_BUILD_ROOT%{_prefix}" > conf-home
 
-#	RPM_OPT_FLAGS="%{rpmcflags}"
+%{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
-%{__make} install \
-	DESTDIR=$RPM_BUILD_ROOT
+# bleh, doesn't honour home for /etc
+./install
 
 %clean
 rm -rf $RPM_BUILD_ROOT
